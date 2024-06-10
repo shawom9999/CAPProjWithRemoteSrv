@@ -1,0 +1,5 @@
+EMP_ID,FIRST_NAME,MIDDLE_NAME,LAST_NAME,PHONE,EMAIL,DATEOFBIRTH,DEPT_ID,createdAt,createdBy,modifiedAt,modifiedBy
+9001,Omkar,Kumar,Shaw,323434,omkar@gmail.com,2000-04-01,101,,Admin,,Admin
+9002,Shiv,Kumar,,32345364,shiv36@gmail.com,2002-04-01,115,,Admin,,Admin
+9003,Anmol,Kumar,,3224534,anmol678@gmail.com,1997-04-17,102,,Admin,,Admin
+9004,Karthick,Kumar,,32979734,karthick99@gmail.com,2003-09-01,103,,Admin,,Admin

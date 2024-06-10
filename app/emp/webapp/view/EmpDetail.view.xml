@@ -1,0 +1,61 @@
+<mvc:View controllerName="emp.controller.EmpDetail"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
+    <Page id="page" title="Employee Details">
+        <content>
+            <VBox class="sapUiSmallMargin">
+				<f:SimpleForm
+					editable="true"
+					layout="ResponsiveGridLayout"
+					title="Employee Details"
+					labelSpanXL="3"
+					labelSpanL="3"
+					labelSpanM="3"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="4"
+					emptySpanL="4"
+					emptySpanM="4"
+					emptySpanS="0"
+					columnsXL="1"
+					columnsL="1"
+					columnsM="1"
+					singleContainerFullSize="false" >
+					<f:content>
+						<Label text="Employee Id" />
+						<Text id="name" text="{EMP_ID}"/>						
+						<Label text="Name" />
+						<Input value="{FIRST_NAME}" placeholder="Fisrt Name">
+							<layoutData>
+								<l:GridData span="XL1 L2 M2 S4" />
+							</layoutData>
+						</Input>
+						<Input value="{MIDDLE_NAME}" placeholder="Middle Name"/>
+						<Input value="{LAST_NAME}" placeholder="Last Name"/>
+						<Label text="Phone No." />
+						<Input value="{PHONE}" />
+						<Label text="Email" />
+						<Input value="{EMAIL}" />
+						<Label text="Date Of Birth" />
+						<DatePicker value="{DATEOFBIRTH}" valueFormat="yyyy-MM-dd" />
+						<Label text="Department" />
+						<Select items="{/Departments}" selectedKey="{DEPT_ID}">
+							<items>
+								<core:Item text="{DEPT_NAME}" key="{DEPT_ID}"/>
+							</items>
+						</Select>
+						<Label text="Skills" required="true" />
+						<MultiInput value="{oEmpDetailModel>/SKILLS}" showValueHelp="false"/>
+					</f:content>					
+				</f:SimpleForm>
+			</VBox>
+        </content>
+		<footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button text="Cancel" press="onCancelPress" type="Reject" />
+				<Button text="Save" press="onSaveEmp" type="Accept" />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

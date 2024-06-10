@@ -1,0 +1,60 @@
+<mvc:View controllerName="emp.controller.createNewEmp"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
+    <Page id="page" title="Create New Employee">
+        <content>
+            <VBox class="sapUiSmallMargin">
+				<f:SimpleForm
+					editable="true"
+					layout="ResponsiveGridLayout"
+					title="Employee Details"
+					labelSpanXL="3"
+					labelSpanL="3"
+					labelSpanM="3"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="4"
+					emptySpanL="4"
+					emptySpanM="4"
+					emptySpanS="0"
+					columnsXL="1"
+					columnsL="1"
+					columnsM="1"
+					singleContainerFullSize="false" >
+					<f:content>
+						<Label text="Name" />
+						<Input value="{oCreateEmpModel>/FIRST_NAME}" placeholder="First Name">
+							<layoutData>
+								<l:GridData span="XL1 L1 M2 S4" />
+							</layoutData>
+						</Input>
+						<Input value="{oCreateEmpModel>/MIDDLE_NAME}" placeholder="Middle Name"/>
+						<Input value="{oCreateEmpModel>/LAST_NAME}" placeholder="Last Name"/>
+						<Label text="Phone No." />
+						<Input value="{oCreateEmpModel>/PHONE}" type="Number"/>
+						<Label text="Email" />
+						<Input value="{oCreateEmpModel>/EMAIL}" />
+						<Label text="Date Of Birth" />
+						<DatePicker value="{oCreateEmpModel>/DATEOFBIRTH}" valueFormat="yyyy-MM-dd" />
+						<Label text="Department" required="true"/>
+						<Select items="{path: '/Departments', sorter: {path: 'DEPT_NAME', descending: false}}" 
+							selectedKey="{oCreateEmpModel>/DEPT_ID}">
+							<items>
+								<core:Item text="{DEPT_NAME}" key="{DEPT_ID}"/>
+							</items>
+						</Select>
+						<Label text="Skills" required="true" />
+						<MultiInput value="{oCreateEmpModel>/SKILLS}" showValueHelp="false"/>
+					</f:content>					
+				</f:SimpleForm>
+			</VBox>
+        </content>
+		<footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button text="Cancel" press="onCancelPress" type="Reject" />
+				<Button text="Save" press="onSaveEmp" type="Accept" />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

@@ -1,0 +1,23 @@
+### Get
+GET http://localhost:4004/catalog/Departments
+### Get Single entity
+GET http://localhost:4004/catalog/Departments/108
+
+### Post
+
+POST http://localhost:4004/catalog/Departments HTTP/1.1
+Content-Type: application/json
+
+{
+    "DEPT_ID": 116,
+    "DEPT_NAME": "Testing"
+}
+### Patch
+PATCH http://localhost:4004/catalog/Departments/116
+Content-Type: application/json
+
+{
+    "DEPT_NAME": "Automation Testing"
+}
+### Delete
+DELETE http://localhost:4004/catalog/Departments/116

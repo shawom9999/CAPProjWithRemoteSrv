@@ -1,0 +1,14 @@
+<mvc:View controllerName="emp.controller.Department"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="Manage Employees">
+        <content>
+            <List items="{path: '/Departments', sorter: {path: 'DEPT_NAME', descending: false}}" 
+                headerText="Departments" itemPress="onDeptPress" >
+                <StandardListItem title="{DEPT_NAME}"
+                    counter="{DEPT_ID}"
+                    type="Active"/>           
+            </List>
+        </content>
+    </Page>
+</mvc:View>

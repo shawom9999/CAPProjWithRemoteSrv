@@ -1,0 +1,122 @@
+_schema-version: "3.1"
+ID: manageemp
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: manageemp-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: manageemp-db
+  - name: manageemp-auth
+  - name: manageemp-destination-service
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    readiness-health-check-http-endpoint: /health
+    readiness-health-check-type: http
+  build-parameters:
+    builder: npm
+- name: manageemp-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: manageemp-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: manageemp-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: manageemp-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - emp.zip
+      name: emp
+      target-path: resources/
+- name: emp
+  type: html5
+  path: app/emp
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: manageemp-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: manageemp-destination-service
+    parameters:
+      content-target: true
+  - name: manageemp-repo-host
+    parameters:
+      service-key:
+        name: manageemp-repo-host-key
+  - name: manageemp-auth
+    parameters:
+      service-key:
+        name: manageemp-auth-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: manageemp_manageemp_repo_host
+          ServiceInstanceName: manageemp-html5-srv
+          ServiceKeyName: manageemp-repo-host-key
+          sap.cloud.service: manageemp
+        - Authentication: OAuth2UserTokenExchange
+          Name: manageemp_manageemp_auth
+          ServiceInstanceName: manageemp-auth
+          ServiceKeyName: manageemp-auth-key
+          sap.cloud.service: manageemp
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+resources:
+- name: manageemp-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: manageemp-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: manageemp-html5-srv
+    service-plan: app-host
+- name: manageemp-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      version: 1.0.0
+    service: destination
+    service-name: manageemp-destination-service
+    service-plan: lite
+- name: manageemp-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: manageemp-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

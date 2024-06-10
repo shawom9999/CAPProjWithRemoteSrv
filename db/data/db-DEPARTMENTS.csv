@@ -1,0 +1,16 @@
+DEPT_ID,DEPT_NAME
+101,SAP
+102,Security
+103,Infra
+104,AWS
+105,GCP
+106,Azure
+107,S4Hana
+108,AI
+109,Apps Modernization
+110, ABAP
+111,Networking
+112, Migration
+113, Risk & Compliance
+114, HR
+115,Accounting & Finance
